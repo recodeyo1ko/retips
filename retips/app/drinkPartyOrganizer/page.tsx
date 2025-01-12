@@ -1,4 +1,3 @@
-// app/drinkPartyOrganizer/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -10,6 +9,7 @@ interface Group {
   groupName: string;
   groupCount: number;
   groupAmountPerPerson: number;
+  groupTotalAmount: number;
 }
 
 const DrinkPartyOrganizerPage = () => {
@@ -18,14 +18,33 @@ const DrinkPartyOrganizerPage = () => {
   const [totalBill, setTotalBill] = useState<number | "">("");
   const [totalPeople, setTotalPeople] = useState<number | "">("");
   const [groups, setGroups] = useState<Group[]>([
-    { groupName: "", groupCount: 0, groupAmountPerPerson: 0 },
+    {
+      groupName: "",
+      groupCount: 0,
+      groupAmountPerPerson: 0,
+      groupTotalAmount: 0,
+    },
   ]);
 
   const addGroup = () => {
     setGroups((prevGroups) => [
       ...prevGroups,
-      { groupName: "", groupCount: 0, groupAmountPerPerson: 0 },
+      {
+        groupName: "",
+        groupCount: 0,
+        groupAmountPerPerson: 0,
+        groupTotalAmount: 0,
+      },
     ]);
+  };
+
+  const removeGroup = (index: number) => {
+    // グループが1つの場合は削除しない
+    if (groups.length > 1) {
+      const newGroups = [...groups];
+      newGroups.splice(index, 1);
+      setGroups(newGroups);
+    }
   };
 
   const calculateTotals = () => {
@@ -168,7 +187,12 @@ const DrinkPartyOrganizerPage = () => {
       </div>
 
       {/* グループ情報 */}
-      <GroupForm groups={groups} setGroups={setGroups} addGroup={addGroup} />
+      <GroupForm
+        groups={groups}
+        setGroups={setGroups}
+        addGroup={addGroup}
+        removeGroup={removeGroup}
+      />
 
       {/* 結果の照合 */}
       <ResultVerification
@@ -184,12 +208,15 @@ const DrinkPartyOrganizerPage = () => {
 
       {/* コピーエリア */}
       <CopyArea
+        calculationMode={calculationMode}
         courseFee={courseFee}
         totalBill={totalBill}
         totalPeople={totalPeople}
         groups={groups}
         totalGroupAmount={totalGroupAmount}
         totalGroupCount={totalGroupCount}
+        billMatches={billMatches}
+        peopleMatch={peopleMatch}
       />
     </div>
   );
