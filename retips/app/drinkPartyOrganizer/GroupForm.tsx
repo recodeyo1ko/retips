@@ -1,3 +1,5 @@
+"use client";
+
 interface Group {
   groupName: string;
   groupCount: number;
@@ -18,11 +20,25 @@ const GroupForm = ({
   addGroup,
   removeGroup,
 }: GroupFormProps) => {
+  // 色のリストを用意
+  const backgroundColors = [
+    "bg-blue-100",
+    "bg-green-100",
+    "bg-yellow-100",
+    "bg-pink-100",
+    "bg-purple-100",
+  ];
+
   return (
     <div className="border border-gray-300 p-4 rounded-lg mb-6 w-full max-w-2xl">
       <h2 className="text-lg font-semibold mb-4">グループ情報</h2>
       {groups.map((group, index) => (
-        <div key={index} className="border-b pb-4 mb-4">
+        <div
+          key={index}
+          className={`border-b pb-4 mb-4 rounded-md p-4 ${
+            backgroundColors[index % backgroundColors.length]
+          }`}
+        >
           {/* グループ情報フォーム */}
           <div className="mb-2">
             <label className="block text-sm font-semibold mb-1">

@@ -6,18 +6,19 @@ interface Group {
   groupName: string;
   groupCount: number;
   groupAmountPerPerson: number;
+  groupTotalAmount: number;
 }
 
 interface CopyAreaProps {
-  calculationMode: string; // 計算モード
+  calculationMode: string;
   courseFee: number | "";
   totalBill: number | "";
   totalPeople: number | "";
   groups: Group[];
   totalGroupAmount: number;
   totalGroupCount: number;
-  billMatches: boolean; // 金額整合性
-  peopleMatch: boolean; // 人数整合性
+  billMatches: boolean;
+  peopleMatch: boolean;
 }
 
 const CopyArea = ({
@@ -31,9 +32,7 @@ const CopyArea = ({
   billMatches,
   peopleMatch,
 }: CopyAreaProps) => {
-  {
-    /* ヘッダー部分の生成 */
-  }
+  // ヘッダー部分の生成
   const headerText =
     calculationMode === "courseFee"
       ? `１人分のコース料金：${Number(
@@ -47,9 +46,7 @@ const CopyArea = ({
           totalPeople
         ).toLocaleString()}人`;
 
-  {
-    /* 差異がある場合のメッセージを生成 */
-  }
+  // 差異がある場合のメッセージを生成
   const discrepancyText: string[] = [];
 
   if (!billMatches) {
@@ -79,31 +76,25 @@ const CopyArea = ({
     }
   }
 
-  {
-    /*グループ詳細 */
-  }
+  // グループ詳細
   const groupDetails = groups
     .map(
-      (group, index) =>
-        `◇グループ${index + 1}◇\n支払額：${Number(
+      (group) =>
+        `◇${group.groupName || "名称未設定グループ"}◇\n支払額：${Number(
           group.groupAmountPerPerson
         ).toLocaleString()}円  人数：${Number(
           group.groupCount
-        ).toLocaleString()}人  合計：${(
-          group.groupAmountPerPerson * group.groupCount
+        ).toLocaleString()}人  合計：${Number(
+          group.groupTotalAmount
         ).toLocaleString()}円\n--------------------`
     )
     .join("\n");
 
-  {
-    /* フッター部分の生成 */
-  }
+  // フッター部分の生成 (開業を明示)
   const footerText = `全グループ支払額合計：${totalGroupAmount.toLocaleString()}円\n全グループ人数合計：${totalGroupCount.toLocaleString()}人`;
 
-  {
-    /* コピー内容の組み立て */
-  }
-  const copyText = `${headerText}\n--------------------\n${groupDetails}${footerText}${
+  // コピー内容の組み立て
+  const copyText = `${headerText}\n--------------------\n${groupDetails}\n${footerText}${
     discrepancyText.length > 0 ? `\n${discrepancyText.join("\n")}` : ""
   }`;
 

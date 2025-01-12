@@ -4,6 +4,7 @@ import { useState } from "react";
 import GroupForm from "./GroupForm";
 import CopyArea from "./CopyArea";
 import ResultVerification from "./resultVerification";
+import BasicInputForm from "./BasicInputForm";
 
 interface Group {
   groupName: string;
@@ -13,10 +14,7 @@ interface Group {
 }
 
 const DrinkPartyOrganizerPage = () => {
-  const [calculationMode, setCalculationMode] = useState("courseFee");
-  {
-    /* "courseFee" or "totalBill" */
-  }
+  const [calculationMode, setCalculationMode] = useState("courseFee"); // "courseFee" or "totalBill"
   const [courseFee, setCourseFee] = useState<number | "">("");
   const [totalBill, setTotalBill] = useState<number | "">("");
   const [totalPeople, setTotalPeople] = useState<number | "">("");
@@ -42,9 +40,6 @@ const DrinkPartyOrganizerPage = () => {
   };
 
   const removeGroup = (index: number) => {
-    {
-      /* グループが1つの場合は削除しない */
-    }
     if (groups.length > 1) {
       const newGroups = [...groups];
       newGroups.splice(index, 1);
@@ -78,118 +73,16 @@ const DrinkPartyOrganizerPage = () => {
       <h1 className="text-2xl font-bold mb-6">飲み会計算ツール</h1>
 
       {/* 請求・人数情報 */}
-      <div className="border border-gray-300 p-4 rounded-lg mb-6 w-full max-w-2xl">
-        <h2 className="text-lg font-semibold mb-4">請求・人数情報</h2>
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center space-x-4">
-            <label className="font-medium">計算方法:</label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="calculationMode"
-                value="courseFee"
-                checked={calculationMode === "courseFee"}
-                onChange={() => {
-                  setCalculationMode("courseFee");
-                  setTotalBill("");
-                }}
-              />
-              <span>コース料金 (1人分)</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="calculationMode"
-                value="totalBill"
-                checked={calculationMode === "totalBill"}
-                onChange={() => {
-                  setCalculationMode("totalBill");
-                  setCourseFee("");
-                }}
-              />
-              <span>請求金額</span>
-            </label>
-          </div>
-
-          {calculationMode === "courseFee" && (
-            <>
-              <div className="flex items-center space-x-2">
-                <label htmlFor="courseFee" className="font-medium">
-                  コース料金 (1人分):
-                </label>
-                <input
-                  type="number"
-                  id="courseFee"
-                  value={courseFee}
-                  onChange={(e) =>
-                    setCourseFee(
-                      e.target.value !== "" ? Number(e.target.value) : ""
-                    )
-                  }
-                  className="border rounded-md px-2 py-1 w-full"
-                  placeholder="例: 5000"
-                />
-              </div>
-              <div className="flex items-center space-x-2 mt-4">
-                <label htmlFor="totalPeople" className="font-medium">
-                  参加人数:
-                </label>
-                <input
-                  type="number"
-                  id="totalPeople"
-                  value={totalPeople}
-                  onChange={(e) =>
-                    setTotalPeople(
-                      e.target.value !== "" ? Number(e.target.value) : ""
-                    )
-                  }
-                  className="border rounded-md px-2 py-1 w-full"
-                  placeholder="例: 4"
-                />
-              </div>
-            </>
-          )}
-
-          {calculationMode === "totalBill" && (
-            <>
-              <div className="flex items-center space-x-2">
-                <label htmlFor="totalBill" className="font-medium">
-                  請求金額:
-                </label>
-                <input
-                  type="number"
-                  id="totalBill"
-                  value={totalBill}
-                  onChange={(e) =>
-                    setTotalBill(
-                      e.target.value !== "" ? Number(e.target.value) : ""
-                    )
-                  }
-                  className="border rounded-md px-2 py-1 w-full"
-                  placeholder="例: 20000"
-                />
-              </div>
-              <div className="flex items-center space-x-2">
-                <label htmlFor="totalPeople" className="font-medium">
-                  参加人数:
-                </label>
-                <input
-                  type="number"
-                  id="totalPeople"
-                  value={totalPeople}
-                  onChange={(e) =>
-                    setTotalPeople(
-                      e.target.value !== "" ? Number(e.target.value) : ""
-                    )
-                  }
-                  className="border rounded-md px-2 py-1 w-full"
-                  placeholder="例: 4"
-                />
-              </div>
-            </>
-          )}
-        </div>
-      </div>
+      <BasicInputForm
+        calculationMode={calculationMode}
+        setCalculationMode={setCalculationMode}
+        courseFee={courseFee}
+        setCourseFee={setCourseFee}
+        totalBill={totalBill}
+        setTotalBill={setTotalBill}
+        totalPeople={totalPeople}
+        setTotalPeople={setTotalPeople}
+      />
 
       {/* グループ情報 */}
       <GroupForm
