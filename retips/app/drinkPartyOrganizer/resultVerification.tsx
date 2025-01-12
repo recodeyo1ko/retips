@@ -21,12 +21,16 @@ const ResultVerification = ({
   billMatches,
   peopleMatch,
 }: ResultVerificationProps) => {
-  // 整合性チェックのメッセージを生成
+  {
+    /*  整合性チェックのメッセージを生成 */
+  }
   const generateMessage = () => {
     let messages: string[] = [];
 
     if (calculationMode === "courseFee") {
-      // コース料金モード: 金額整合性チェック
+      {
+        /* コース料金モード: 金額整合性チェック */
+      }
       const expectedTotalAmount = Number(courseFee) * Number(totalPeople);
       if (expectedTotalAmount === totalGroupAmount) {
         messages.push("コース料金と全グループ支払額合計は一致しています。");
@@ -42,7 +46,9 @@ const ResultVerification = ({
     }
 
     if (calculationMode === "totalBill") {
-      // 請求金額モード: 金額整合性チェック
+      {
+        /*請求金額モード: 金額整合性チェック */
+      }
       if (billMatches) {
         messages.push("請求金額と全グループ支払額合計は一致しています。");
       } else {
@@ -56,7 +62,9 @@ const ResultVerification = ({
       }
     }
 
-    // 人数整合性チェック
+    {
+      /* 人数整合性チェック */
+    }
     if (peopleMatch) {
       messages.push("参加人数と全グループ人数合計は一致しています。");
     } else {

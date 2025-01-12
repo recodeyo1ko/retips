@@ -13,7 +13,10 @@ interface Group {
 }
 
 const DrinkPartyOrganizerPage = () => {
-  const [calculationMode, setCalculationMode] = useState("courseFee"); // "courseFee" or "totalBill"
+  const [calculationMode, setCalculationMode] = useState("courseFee");
+  {
+    /* "courseFee" or "totalBill" */
+  }
   const [courseFee, setCourseFee] = useState<number | "">("");
   const [totalBill, setTotalBill] = useState<number | "">("");
   const [totalPeople, setTotalPeople] = useState<number | "">("");
@@ -39,7 +42,9 @@ const DrinkPartyOrganizerPage = () => {
   };
 
   const removeGroup = (index: number) => {
-    // グループが1つの場合は削除しない
+    {
+      /* グループが1つの場合は削除しない */
+    }
     if (groups.length > 1) {
       const newGroups = [...groups];
       newGroups.splice(index, 1);

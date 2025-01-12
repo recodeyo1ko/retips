@@ -31,7 +31,9 @@ const CopyArea = ({
   billMatches,
   peopleMatch,
 }: CopyAreaProps) => {
-  // ヘッダー部分の生成
+  {
+    /* ヘッダー部分の生成 */
+  }
   const headerText =
     calculationMode === "courseFee"
       ? `１人分のコース料金：${Number(
@@ -45,7 +47,9 @@ const CopyArea = ({
           totalPeople
         ).toLocaleString()}人`;
 
-  // 差異がある場合のメッセージを生成
+  {
+    /* 差異がある場合のメッセージを生成 */
+  }
   const discrepancyText: string[] = [];
 
   if (!billMatches) {
@@ -75,7 +79,9 @@ const CopyArea = ({
     }
   }
 
-  // グループ詳細
+  {
+    /*グループ詳細 */
+  }
   const groupDetails = groups
     .map(
       (group, index) =>
@@ -89,10 +95,14 @@ const CopyArea = ({
     )
     .join("\n");
 
-  // フッター部分の生成
+  {
+    /* フッター部分の生成 */
+  }
   const footerText = `全グループ支払額合計：${totalGroupAmount.toLocaleString()}円\n全グループ人数合計：${totalGroupCount.toLocaleString()}人`;
 
-  // コピー内容の組み立て
+  {
+    /* コピー内容の組み立て */
+  }
   const copyText = `${headerText}\n--------------------\n${groupDetails}${footerText}${
     discrepancyText.length > 0 ? `\n${discrepancyText.join("\n")}` : ""
   }`;
