@@ -15,6 +15,9 @@ export const Sidebar = () => {
       <Link href={"/drinkPartyOrganizer"}>
         <div>飲み会幹事</div>
       </Link>
+      <Link href={"/decimalConversion"}>
+        <div>60進数⇔10進数変換</div>
+      </Link>
     </div>
   );
 };
